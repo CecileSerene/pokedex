@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {convertPoundsToKilograms, getFirstAbility} from "./service";
+import {Attribute, Card, Sprite, Title} from "./Pokemon.style";
 
 class Pokemon extends Component {
 
@@ -9,7 +11,8 @@ class Pokemon extends Component {
             getUrl : 'https://pokeapi.co/api/v2/pokemon/' + props.idPokemon,
             name : '',
             picture : '',
-            weight : 0
+            weight : 0,
+            firstAbility: ''
         };
         this.getPokemon = this.getPokemon.bind(this)
     };
@@ -18,11 +21,12 @@ class Pokemon extends Component {
         console.log(this.state.getUrl);
         fetch(this.state.getUrl).then(
             result => { return result.json() }
-        ).then(data => {
+        ).then(pokemon => {
                 this.setState(
-                    {name : data.name,
-                        picture: data.sprites.front_default,
-                        weight : data.weight}
+                    {name : pokemon.name,
+                        picture: pokemon.sprites.front_default,
+                        weight : pokemon.weight,
+                        firstAbility: getFirstAbility(pokemon)}
                 )
             }
         )
@@ -35,10 +39,12 @@ class Pokemon extends Component {
 
     render() {
         return(
-            <div>
-                <img src= {this.state.picture} />
-                <p>Name: { this.state.name }, Weight: { this.state.weight }</p>
-            </div>
+            <Card>
+                <Title> { this.state.name } </Title>
+                <Sprite src= {this.state.picture} />
+                <Attribute>Weight: { convertPoundsToKilograms(this.state.weight) }kg</Attribute>
+                <Attribute>Ability : { this.state.firstAbility }</Attribute>
+            </Card>
         )
     };
 }
