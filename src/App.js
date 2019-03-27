@@ -6,8 +6,12 @@ class App extends Component {
 
     constructor() {
         super();
+        let pokemonIds = [];
+        for (let i = 1; i <= 151; i++) {
+            pokemonIds.push(i);
+        }
         this.state = {
-            ids: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+            ids: pokemonIds
         }
     };
 
