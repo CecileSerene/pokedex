@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {connect} from "react-redux";
+
 import {convertPoundsToKilograms, getFirstAbility} from "./service";
 import {Attribute, Card, Sprite, Title} from "./Pokemon.style";
+import {fetchRequestAction} from "../../redux";
+
 
 class Pokemon extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            getUrl : 'https://pokeapi.co/api/v2/pokemon/' + props.idPokemon,
+            getUrl : `https://pokeapi.co/api/v2/pokemon/${props.idPokemon}`,
             name : '',
             picture : '',
             weight : 0,
@@ -34,16 +38,17 @@ class Pokemon extends Component {
     };
 
     componentDidMount() {
-        this.getPokemon()
+        this.props.fetch(this.props.idPokemon)
+        //this.getPokemon()
     };
 
     render() {
         return(
             <Card>
-                <Title> { this.state.name } </Title>
-                <Sprite src= {this.state.picture} />
-                <Attribute>Weight: { convertPoundsToKilograms(this.state.weight) }kg</Attribute>
-                <Attribute>Ability : { this.state.firstAbility }</Attribute>
+                <Title> { this.props.name } </Title>
+                <Sprite src= {this.props.picture} />
+                <Attribute>Weight: { convertPoundsToKilograms(this.props.weight) }kg</Attribute>
+                <Attribute>Ability : { this.props.firstAbility }</Attribute>
             </Card>
         )
     };
@@ -53,4 +58,22 @@ Pokemon.propTypes = {
     idPokemon: PropTypes.number.isRequired
 };
 
-export default Pokemon;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetch: (id) => dispatch(fetchRequestAction(id))
+    }
+};
+
+const mapStateToProps = (state,  ownProps) => {
+    const pokemon = state[ownProps.idPokemon];
+    if (pokemon !== undefined) {
+        return {name : pokemon.name,
+            picture: pokemon.sprites.front_default,
+            weight : pokemon.weight,
+            firstAbility: getFirstAbility(pokemon)}
+    }
+
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Pokemon);
