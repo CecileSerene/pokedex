@@ -1,11 +1,8 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga'
 
-import App from './App.js'
 import * as Redux from "redux";
-import {watchFetchRequest} from "./sagas";
+import {watchFetchRequest} from "./components/Pokemon/sagas";
 import {applyMiddleware} from "redux";
 
 const FETCH_REQUEST = 'FETCH_REQUEST';
@@ -17,12 +14,13 @@ export const fetchRequestAction = (idPokemon) => {
     return {type: FETCH_REQUEST, id: idPokemon}
 };
 
-export const fetchSuccessAction = (pokemon) => {
+export const fetchSuccessAction = (pokemonId, pokemon) => {
     return { response: pokemon,
+        id: pokemonId,
         type: FETCH_SUCCESS}
 };
 
-const fetchFailureAction = (responseError) => {
+export const fetchFailureAction = (pokemonId, responseError) => {
     return { error: responseError,
         type: FETCH_FAILURE}
 };
@@ -32,9 +30,13 @@ const pokemonReducer = (state= {}, action) => {
         case FETCH_REQUEST:
             return state;
         case FETCH_SUCCESS:
-            return {...state, [action.response.id]: action.response};
+            return {
+                ...state, [action.id]: {success: true, info: action.response}
+            };
         case FETCH_FAILURE:
-            return action.error;
+            return {
+                ...state, [action.id]: {success: false, error: action.error}
+            };
         default:
             return state;
     }

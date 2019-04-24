@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Pokemon from "./components/Pokemon/Pokemon";
 import {Box, Container} from "./App.style";
-import createSagaMiddleware from 'redux-saga'
 
 class App extends Component {
 

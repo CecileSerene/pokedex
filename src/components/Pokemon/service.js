@@ -7,5 +7,6 @@ export function getFirstAbility(pokemon) {
 }
 
 export function convertPoundsToKilograms(pounds) {
-    return pounds * 0.454
+    const kg = pounds * 0.454
+    return kg.toFixed(2)
 }
