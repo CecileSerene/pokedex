@@ -23,3 +23,10 @@ export const Sprite = styled.img`
     margin-left: auto;
     margin-right: auto;
 `;
+
+export const AvatarButton = styled.button`
+    border: None;
+    &:hover {
+        background-color: #e6e6e6;
+    }
+`;

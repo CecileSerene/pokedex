@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Pokemon from "./components/Pokemon/Pokemon";
 import {Box, Container} from "./App.style";
+import Avatar from "./components/Pokemon/Avatar";
 
 class App extends Component {
 
@@ -16,7 +16,7 @@ class App extends Component {
     };
 
     render() {
-        const pokedex = this.state.ids.map(id => <Box key={id}><Pokemon idPokemon={id}/></Box>)
+        const pokedex = this.state.ids.map(id => <Box key={id}><Avatar idPokemon={id}/></Box>)
         return(
             <Container>
                 { pokedex }

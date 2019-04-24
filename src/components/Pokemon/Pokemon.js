@@ -4,17 +4,12 @@ import {connect} from "react-redux";
 
 import {convertPoundsToKilograms, getFirstAbility} from "./service";
 import {Attribute, Card, Sprite, Title} from "./Pokemon.style";
-import {fetchRequestAction} from "../../redux";
 
 
 class Pokemon extends Component {
 
     constructor(props) {
         super(props);
-    };
-
-    componentDidMount() {
-        this.props.fetch(this.props.idPokemon)
     };
 
     render() {
@@ -33,11 +28,6 @@ Pokemon.propTypes = {
     idPokemon: PropTypes.number.isRequired
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        fetch: (id) => dispatch(fetchRequestAction(id))
-    }
-};
 
 const mapStateToProps = (state,  ownProps) => {
     const pokemonObject = state[ownProps.idPokemon];
@@ -59,4 +49,4 @@ const mapStateToProps = (state,  ownProps) => {
 
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Pokemon);
+export default connect(mapStateToProps, null)(Pokemon);

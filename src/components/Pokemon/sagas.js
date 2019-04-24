@@ -1,4 +1,4 @@
-import { put, takeEvery, call} from 'redux-saga/effects'
+import { put, takeEvery} from 'redux-saga/effects'
 import {fetchFailureAction, fetchSuccessAction} from "../../redux";
 
 
@@ -9,7 +9,6 @@ function* fetchRequest(action)  {
     try {
         const pokemon = yield fetch(url)
             .then(response => response.json(), );
-        console.log(pokemon.id);
         yield put(fetchSuccessAction(action.id, pokemon))
     } catch (error) {
         yield put(fetchFailureAction(action.id, error))
