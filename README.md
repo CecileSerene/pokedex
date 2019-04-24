@@ -10,7 +10,10 @@ It shows the complete pokedex of Gen 1 Pokemon. Click on the sprite to display n
 
 ![Pikachu](src/data/pikachu.png "Pikachu")
 ## Installation
-Run `npm install`.
+Clone this git and in the git directory, run `npm install`.
+
+You need to [download node.js](https://www.npmjs.com/get-npm) 
+to use the npm command if you don't have it already
 
 ## Run
-Run `npm start`.
+On the project directory, run `npm start`. It will open a localhost web page on your browser.
