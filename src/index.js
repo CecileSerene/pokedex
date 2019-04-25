@@ -5,12 +5,15 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Provider from "react-redux/es/components/Provider";
 import {pokemonStore} from "./redux";
+import { BrowserRouter } from 'react-router-dom';
 
 const rootElement = document.getElementById('root');
 
 ReactDOM.render((
     <Provider store={pokemonStore}>
-        <App />
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
     </Provider>
 ), rootElement);
 

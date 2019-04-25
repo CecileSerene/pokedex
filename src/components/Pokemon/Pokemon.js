@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 
 import {convertPoundsToKilograms, getFirstAbility} from "./service";
 import {Attribute, Card, Sprite, Title} from "./Pokemon.style";
+import Detail from "../Detail/Detail";
+import { Route, Link } from "react-router-dom";
 
 
 class Pokemon extends Component {
@@ -14,12 +16,16 @@ class Pokemon extends Component {
 
     render() {
         return(
-            <Card>
-                <Title> { this.props.name } </Title>
-                <Sprite src= {this.props.picture} />
-                <Attribute>Weight: { convertPoundsToKilograms(this.props.weight) }kg</Attribute>
-                <Attribute>Ability : { this.props.firstAbility }</Attribute>
-            </Card>
+            <div>
+                <Card>
+                    <Title> { this.props.name } </Title>
+                    <Sprite src= {this.props.picture} />
+                    <Attribute>Weight: { convertPoundsToKilograms(this.props.weight) }kg</Attribute>
+                    <Attribute>Ability : { this.props.firstAbility }</Attribute>
+                </Card>
+                <Link to={"/detail/" + this.props.idPokemon}>See details</Link>
+                <Route path="/detail/:id" component={Detail}/>
+            </div>
         )
     };
 }
