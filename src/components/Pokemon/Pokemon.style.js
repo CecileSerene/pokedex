@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 export const Title = styled.p`
     font-size: 1.5em;
@@ -22,10 +22,13 @@ export const Sprite = styled.img`
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 100px;
+    height: 100px;
 `;
 
 export const AvatarButton = styled.button`
     border: None;
+    background-color: white;
     &:hover {
         background-color: #e6e6e6;
     }
