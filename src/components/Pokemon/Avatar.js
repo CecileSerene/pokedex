@@ -5,7 +5,7 @@ import Dialog from '@material-ui/core/Dialog';
 
 
 import {AvatarButton,  Sprite} from "./Pokemon.style";
-import {fetchRequestAction} from "../../redux";
+import {fetchRequestAction, getPokemon} from "../../redux";
 import Pokemon from "./Pokemon";
 
 
@@ -34,14 +34,20 @@ class Avatar extends Component {
 
     render() {
         return(
-            <div>
-                <AvatarButton onClick={this.openInfo}>
-                    <Sprite src= {this.props.picture} />
-                </AvatarButton>
-                <Dialog open={this.state.open} onClose={this.handleClose}>
-                    <Pokemon idPokemon={this.props.idPokemon} />
-                </Dialog>
-            </div>
+            this.props.myProps ?
+                <div>
+                    <AvatarButton onClick={this.openInfo}>
+                        <Sprite src= {this.props.myProps.picture} />
+                    </AvatarButton>
+                    <Dialog open={this.state.open} onClose={this.handleClose}>
+                        <Pokemon idPokemon={this.props.idPokemon} />
+                    </Dialog>
+                </div>
+                : <div>
+                    <AvatarButton onClick={this.openInfo}>
+                        <Sprite src= {require('../../data/placeholder.png')} />
+                    </AvatarButton>
+                </div>
 
         )
     };
@@ -54,24 +60,12 @@ Avatar.propTypes = {
 const mapDispatchToProps = (dispatch) => {
     return {
         fetch: (id) => dispatch(fetchRequestAction(id))
+
     }
 };
 
 const mapStateToProps = (state,  ownProps) => {
-    const pokemonObject = state[ownProps.idPokemon];
-    if (pokemonObject !== undefined) {
-        if (pokemonObject.success) {
-            const pokemon = pokemonObject.info;
-            return {
-                picture: pokemon.sprites.front_default,
-            }
-        } else {
-            return {name: pokemonObject.error}
-        }
-    } else {
-        return {name: 'Undefined'}
-    }
-
+    return { myProps : getPokemon(state, ownProps.idPokemon)};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Avatar);
